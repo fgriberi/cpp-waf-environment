@@ -57,14 +57,15 @@ Token* Scanner::getToken() {
    string lex;
    TokenType type;
    int k;
-   int column, line;
+   int column = 0;
+   int line = 0;
 
    c = inStream->get();
 
    while (!foundOne) {
       colCount++;
       switch (state) {
-         case 0 : 
+         case 0 :
             lex = "";
             column=colCount;
             line = lineCount;
@@ -141,7 +142,7 @@ Token* Scanner::getToken() {
             foundOne=true;
             break;
       }
-      
+
       if (!foundOne) {
          lex = lex + c;
          c = inStream->get();
