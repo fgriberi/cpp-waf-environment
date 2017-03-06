@@ -25,7 +25,13 @@ REPOSITORY = "https://github.com/fgriberi/cpp-waf-environment"
 top = '.'
 out = "build"
 
-CXXFLAGS = ["-fPIC"]
+DEBUG = "debug"
+RELEASE = "release"
+CXXFLAGS = ["-fPIC", "-Wall", "-Wno-unused-variable", "-std=c++11", "-pthread"]
+
+# Variant specific build flags
+DEBUG_CXXFLAGS = CXXFLAGS + ["-Og", "-g"]
+RELEASE_CXXFLAGS = CXXFLAGS + ["-O3", "-Wall", "-Wextra", "-Werror", "-Wpedantic"]
 
 
 class BashColor(object):
@@ -60,6 +66,37 @@ def options(opt):
     opt.load("doxygen", tooldir=waftools.location)
 
 
+@conf
+def set_enviroments(conf):
+    """
+    Sets the following enviroments: debug, release
+    :param config: The configuration context
+    :type config: waflib.Configure.ConfigurationContext
+    """
+    conf.setenv(RELEASE)
+    conf.load("compiler_cxx")
+    conf.env.CXXFLAGS = RELEASE_CXXFLAGS
+
+    conf.setenv(DEBUG, env=conf.env.derive())
+    conf.load("compiler_cxx")
+    conf.env.CXXFLAGS = DEBUG_CXXFLAGS
+
+
+def init(ctx):
+    """
+    Setup contexts build_debug, build_release, clean_debug, and clean_release
+    :param ctx: the general waf context
+    :type ctx: waflib.Context.Context
+    """
+    contexts = (BuildContext, CleanContext, InstallContext, UninstallContext)
+    for context in contexts:
+        for c_varinat in [DEBUG, RELEASE]:
+            class tmp(context):
+                variant = c_varinat
+                cmd = context.__name__.replace("Context", '').\
+                    lower() + '_' + c_varinat
+
+
 def configure(conf):
     """
     The configuration command is used to check if the requiremements
@@ -70,7 +107,7 @@ def configure(conf):
     conf.load("compiler_cxx")
     conf.load("cppcheck")
     conf.load("doxygen")
-    conf.env.CXXFLAGS = CXXFLAGS
+    conf.set_enviroments()
 
 
 def build(bld):
@@ -80,4 +117,9 @@ def build(bld):
     :param bld: The build context
     :type bld: waflib.Build.BuildContext
     """
-    bld.recurse("src")
+    if not bld.variant:
+        # If no variant was specified then build them all
+        for variant in [DEBUG, RELEASE]:
+            Options.commands.insert(0, bld.cmd + '_' + variant)
+    else:
+        bld.recurse("src")
