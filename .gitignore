@@ -1,0 +1,9 @@
+
+# building Waf files
+.waf-*
+.waf_unittest_gmock
+.lock-*
+waf*.pyc
+
+# Packages
+build
