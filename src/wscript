@@ -30,7 +30,7 @@ def build(bld):
     :type bld: waflib.Build.BuildContext
     """
     source_object = "source_obj"
-    inc = ["../include"]
+    inc = ["../calculator"]
 
     # # Create object files
     bld.objects(
