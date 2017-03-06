@@ -4,6 +4,7 @@
 .waf_unittest_gmock
 .lock-*
 waf*.pyc
+*.pyc
 
 # Packages
 build

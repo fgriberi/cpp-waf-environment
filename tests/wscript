@@ -15,7 +15,7 @@ def build(bld):
     bld(features='cxx cxxprogram test',
         target = 'test_runner',
         lib=["pthread"],
-        includes=['.', ".."],
+        includes=['.', "../calculator"],
         source = 'test.cpp',
     )
     bld.add_post_fun(waf_unittest_gmock.summary)
