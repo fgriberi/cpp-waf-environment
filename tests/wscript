@@ -1,0 +1,21 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+import waf_unittest_gmock
+
+def build(bld):
+    """
+    Build unit tests.
+    Overloaded method from root wscript.
+    """
+    # Filter -Wextra flag when compile test as a release, because gmock has some missing-field-initializers
+    if bld.variant == "release":
+        bld.env.CXXFLAGS = filter(lambda a: a != '-Wextra', bld.env.CXXFLAGS)
+
+    bld(features='cxx cxxprogram test',
+        target = 'test_runner',
+        lib=["pthread"],
+        includes=['.', ".."],
+        source = 'test.cpp',
+    )
+    bld.add_post_fun(waf_unittest_gmock.summary)

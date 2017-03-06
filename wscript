@@ -64,6 +64,7 @@ def options(opt):
     opt.load("compiler_cxx")
     opt.load("cppcheck", tooldir=waftools.location)
     opt.load("doxygen", tooldir=waftools.location)
+    opt.load('waf_unittest_gmock')
 
 
 @conf
@@ -107,6 +108,7 @@ def configure(conf):
     conf.load("compiler_cxx")
     conf.load("cppcheck")
     conf.load("doxygen")
+    conf.load('waf_unittest_gmock')
     conf.set_enviroments()
 
 
@@ -123,3 +125,4 @@ def build(bld):
             Options.commands.insert(0, bld.cmd + '_' + variant)
     else:
         bld.recurse("src")
+        bld.recurse("tests")
