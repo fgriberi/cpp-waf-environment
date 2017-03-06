@@ -8,3 +8,6 @@ waf*.pyc
 
 # Packages
 build
+
+# Reports
+reports
