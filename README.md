@@ -40,7 +40,7 @@ Too see all commands and options run:  **waf -h**
 # How to run
 
  * **Compile**
-```
+```sh
 waf configure <build_mode>
 where build_mode:
 - build_release: compile for release mode
@@ -49,7 +49,7 @@ where build_mode:
 ```
 
  * **Unit Test Suite**
-```
+```sh
 waf <build_mode> --<test_opt>
 where test_opt:
 - notests: exec no unit tests
@@ -59,12 +59,31 @@ Tests executable is generated on build/<debug|release>/tests/test_runner
 ```
 
  * **coverage**
-```
+```sh
 waf configure --enable-gcov
 waf <build_mode> --lcov-report
 Coverage report is generated on reports/lcov-report
 ```
 
+# How to add third party tools
+* 1- Added new option
+On the *options* function and new *add_option*. Example:
+```python
+def options(opt):
+    ...
+    opt.add_option("--new-tool",
+                   help=("..."),
+                   action="store_true", default=False,
+                   dest="new_tool")
+```
+
+* 2- Define new command called *new_tool*
+```python
+def run_tests(bld):
+   ...
+   execute new tools
+   ...
+```
 
 # Waf
 Waf is a python-based framework for configuring, compiling and installing applications. For more information visit:
