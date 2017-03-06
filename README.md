@@ -85,7 +85,7 @@ def run_tests(bld):
    ...
 ```
 
-# Waf
+# About Waf
 Waf is a python-based framework for configuring, compiling and installing applications. For more information visit:
 
 * [Waf project](https://github.com/waf-project/waf)
