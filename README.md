@@ -31,6 +31,9 @@ Where:
     * *--notests*             exec no unit tests
     * *--alltests*            exec all unit tests
     * *--testcmd=TESTCMD*     run the unit tests using the test-cmd string example "--test-cmd="valgrind --error-exitcode=1 %s" to run under valgrind
+    * *--tests*         explicit run all tests cases
+    * *--enable-gcov*       enable code coverage analysis.
+    * *--lcov-report*         Generates a code coverage report (use this option at build time, not in configure)
 
 Too see all commands and options run:  **waf -h**
 
@@ -51,8 +54,17 @@ waf <build_mode> --<test_opt>
 where test_opt:
 - notests: exec no unit tests
 - alltests: exec all unit tests
+- tests: run explicity all test cases throught test exectuble
 Tests executable is generated on build/<debug|release>/tests/test_runner
 ```
+
+ * **coverage**
+```
+waf configure --enable-gcov
+waf <build_mode> --lcov-report
+Coverage report is generated on reports/lcov-report
+```
+
 
 # Waf
 Waf is a python-based framework for configuring, compiling and installing applications. For more information visit:
