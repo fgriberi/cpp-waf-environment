@@ -10,7 +10,8 @@ from xml.dom import minidom
 from waflib.Configure import conf
 from waflib.Errors import WafError, ConfigurationError
 from waflib import Options
-from waflib.Build import BuildContext, CleanContext, InstallContext, UninstallContext
+from waflib.Build import BuildContext, CleanContext, InstallContext,\
+    UninstallContext
 from datetime import datetime
 
 __author__ = "friberi"
@@ -23,6 +24,9 @@ REPOSITORY = "https://github.com/fgriberi/cpp-waf-environment"
 
 top = '.'
 out = "build"
+
+CXXFLAGS = ["-fPIC"]
+
 
 class BashColor(object):
     """
@@ -66,6 +70,8 @@ def configure(conf):
     conf.load("compiler_cxx")
     conf.load("cppcheck")
     conf.load("doxygen")
+    conf.env.CXXFLAGS = CXXFLAGS
+
 
 def build(bld):
     """

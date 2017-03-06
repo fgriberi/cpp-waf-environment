@@ -39,6 +39,33 @@ def build(bld):
         target=source_object
     )
 
+    # Create static library called libcalculator.a
+    bld(
+        features="cxx cxxstlib",
+        use=source_object,
+        target="calculator"
+    )
+
+    # Create shared library called libcalculator.so
+    bld(
+        features="cxx cxxshlib",
+        use=source_object,
+        target="calculator"
+    )
+
+    # NOTE: if you need add external libraries:
+    # libs = ["opencv_imgcodecs", "opencv_imgproc", ...]
+    # libs_path = ["usr/lib", "usr/local/lib", ...]
+    # inc = [".."]
+    #
+    # bld(
+    # features="cxx cxxstlib",
+    # lib=libs,
+    # libpath=libs_path,
+    # use=source_object,
+    # target="calculator",
+    # )
+
     # Create linux executable called main
     bld.program(
         features="cxx cxxprogram",

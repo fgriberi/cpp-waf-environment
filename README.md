@@ -5,8 +5,8 @@
 
 # How to use
 
-*TODO*
+* Compile: ./waf configure build
 
 # Waf
-[Waf project](https://github.com/waf-project/waf)
-[The waf book](https://waf.io/book/)
+* [Waf project](https://github.com/waf-project/waf)
+* [The waf book](https://waf.io/book/)
