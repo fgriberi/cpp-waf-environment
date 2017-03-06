@@ -1,0 +1,49 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+import os
+import fnmatch
+
+__author__ = "friberi"
+
+CPP_FILES = "*.cpp"
+MAIN_ENTRY = "main.cpp"
+SOURCE_DIRECTORY = "src"
+
+
+def get_src():
+    """
+    Returns the source files excluding the main entry point
+    :rtype [str]
+    """
+    src_files = fnmatch.filter(os.listdir(SOURCE_DIRECTORY), CPP_FILES)
+    if MAIN_ENTRY in src_files:
+        src_files.remove(MAIN_ENTRY)
+    return src_files
+
+
+def build(bld):
+    """
+    The build command used for building targets. The targets are created
+    in the build directory
+    :param bld: The build context
+    :type bld: waflib.Build.BuildContext
+    """
+    source_object = "source_obj"
+    inc = ["../include"]
+
+    # # Create object files
+    bld.objects(
+        source=get_src(),
+        includes=inc,
+        target=source_object
+    )
+
+    # Create linux executable called main
+    bld.program(
+        features="cxx cxxprogram",
+        source="main.cpp",
+        use=source_object,
+        includes=inc,
+        target='main'
+    )
