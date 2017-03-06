@@ -3,7 +3,7 @@
 This project is an example about how to generate a C++ environment using Waf. In order to this, a calculator source code is used (from https://github.com/MatheusEngel/Calculadora).
 
 # How to use Waf
-```
+```sh
 waf [commands][options]
 ```
 Where:
