@@ -2,6 +2,12 @@
 
 This project is an example about how to generate a C++ environment using Waf. In order to this, a calculator source code is used (from https://github.com/MatheusEngel/Calculadora).
 
+# Dependencies
+```sh
+sudo apt-get install python-pip
+sudo pip install -I waftools
+```
+
 # How to use Waf
 ```sh
 waf [commands][options]
